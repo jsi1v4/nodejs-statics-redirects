@@ -1,0 +1,16 @@
+{
+  "delay": "1500",
+  "ignore": [
+    "src/**/*.test.ts",
+    "src/**/*.spec.ts",
+    ".git",
+    "node_modules"
+  ],
+  "watch": [
+    "src"
+  ],
+  "exec": [
+    "npm run watch"
+  ],
+  "ext": "ts"
+}
