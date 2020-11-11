@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Application redirects from url to static page or link.",
   "author": "Jsi1v4",
-  "license": "MIT",
+  "license": "GPL-3.0",
   "private": false,
   "scripts": {
     "start": "nodemon",
