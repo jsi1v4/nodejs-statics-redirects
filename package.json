@@ -1,20 +1,21 @@
 {
   "name": "nodejs-statics-redirects",
-  "version": "1.0.0",
-  "description": "Application redirects from url to static page or link.",
+  "version": "1.1.0",
+  "description": "Node Web Application simple url shortner, url to static file page or external link.",
   "author": "Jsi1v4",
   "license": "GPL-3.0",
   "private": false,
   "scripts": {
-    "start": "nodemon",
+    "dev": "nodemon",
     "watch": "NODE_ENV=development node -r ts-node/register ./src/index.ts",
-    "test": "NODE_ENV=development jest",
+    "test": "NODE_ENV=testing jest -u",
     "build": "webpack",
     "build:prod": "webpack --mode production",
     "deploy": "npm run deploy:clear && npm run build:prod",
     "deploy:clear": "rm -r dist/ && mkdir dist/ && mkdir dist/statics"
   },
   "dependencies": {
+    "dotenv": "^9.0.2",
     "express": "^4.17.1",
     "helmet": "^4.1.1",
     "winston": "^3.3.3"

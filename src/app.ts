@@ -1,20 +1,22 @@
-import express from 'express';
-import helmet from 'helmet';
+import express from "express";
+import helmet from "helmet";
 
-import { STATICS } from './constants';
-import logger from './logger';
-import handle from './handle';
+import { STATICS } from "./constants";
+import getConfig from "./config";
+import logger from "./logger";
+import handle from "./handle";
 
 const app = express();
+const config = getConfig();
 const router = express.Router();
 
 app
-  .enable('trust proxy')
-  .use(helmet.frameguard({ action: 'sameorigin' }))
+  .enable("trust proxy")
+  .use(helmet.frameguard({ action: "sameorigin" }))
   .use(helmet.xssFilter())
 
-  .use('/static', express.static(STATICS))
+  .use("/statics", express.static(STATICS))
 
-  .use(handle(router, logger));
+  .use(handle(router, logger, config));
 
 export default app;

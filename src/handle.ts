@@ -1,31 +1,28 @@
-import { Router } from 'express';
-import { Logger } from 'winston';
-import path from 'path';
+import { Router } from "express";
+import { Logger } from "winston";
+import path from "path";
 
-import { DATA, STATICS } from './constants';
+import { STATICS } from "./constants";
+import { Config } from "./config";
 
-export default (router: Router, logger: Logger) => (
-  router.get(['/', '/:param'], (req, res) => {
-    const { hostname, params: { param } } = req;
-    const item = (DATA[hostname + (param ? `/${param}` : '')]) || '';
+export default (router: Router, logger: Logger, config: Config) =>
+  router.get(["/", "/:param"], (req, res) => {
+    const url = req.hostname + (req.params.param ? `/${req.params.param}` : "");
 
-    const [type, value] = item.split(':');
-
-    switch (type) {
-      case 'url':
-        res.status(302).redirect(`${req.protocol}://${value}`);
-        logger.info(`[${hostname}/${param}] redirect to ${value}`);
-        break;
-      case 'file':
-        res.sendFile(path.resolve(STATICS, value, 'index.html'));
-        logger.info(`[${hostname}/${param}] use static file from ${value}`);
-        break;
-      default:
-        res.status(400).json(
-          { message: 'Invalid config, no parameters found.' }
-        );
-        logger.error(`[${hostname}/${param}] error on load config`);
-        break;
+    const toRedirect = config.toRedirect.filter((x) => x.from === url)[0];
+    if (toRedirect) {
+      logger.info(`[${url}] redirect to ${toRedirect.to}`);
+      return res.status(302).redirect(`${req.protocol}://${toRedirect.to}`);
     }
-  })
-);
+
+    const staticFile = config.staticFiles.filter((x) => x.url === url)[0];
+    if (staticFile) {
+      logger.info(`[${url}] use static file from ${staticFile.path}`);
+      return res.sendFile(path.resolve(STATICS, staticFile.path, "index.html"));
+    }
+
+    logger.error(`[${url}] error on load config`);
+    return res
+      .status(400)
+      .json({ message: "Invalid config, no parameters found." });
+  });
