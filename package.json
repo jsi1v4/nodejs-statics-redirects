@@ -2,7 +2,7 @@
   "name": "nodejs-statics-redirects",
   "version": "1.1.0",
   "description": "Node Web Application simple url shortner, url to static file page or external link.",
-  "author": "Jsi1v4 <me@jsi1v4.dev>",
+  "author": "Jsi1v4 <git@jsi1v4.com>",
   "license": "MIT",
   "private": false,
   "scripts": {

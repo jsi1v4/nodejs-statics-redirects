@@ -51,8 +51,3 @@ Run `yarn build` or `npm run build` to build the project.
 ### Production
 
 Run `yarn build:prod` or `npm run build:prod` to build the project.
-
-## About
-
-- **Author**: Jose Silva
-- **Dep**: NodeJs(>=10.x.x)
